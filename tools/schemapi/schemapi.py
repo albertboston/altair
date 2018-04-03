@@ -153,7 +153,7 @@ class SchemaBase(object):
                 _getattr = super(SchemaBase, self).__getattribute__
             return _getattr(attr)
 
-    def __setattr__(self, item , val):
+    def __setattr__(self, item, val):
         self._kwds[item] = val
 
     def __getitem__(self, item):

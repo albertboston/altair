@@ -72,7 +72,7 @@ class Bar(_TestSchema):
 
 
 class SimpleUnion(_TestSchema):
-    _schema = {'anyOf' : [{'type': 'integer'}, {'type': 'string'}]}
+    _schema = {'anyOf': [{'type': 'integer'}, {'type': 'string'}]}
 
 
 class DefinitionUnion(_TestSchema):
@@ -89,7 +89,7 @@ class SimpleArray(_TestSchema):
     _schema = {
         'type': 'array',
         'items': {
-            'anyOf' : [{'type': 'integer'}, {'type': 'string'}]
+            'anyOf': [{'type': 'integer'}, {'type': 'string'}]
         }
     }
 
