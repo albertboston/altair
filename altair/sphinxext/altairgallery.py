@@ -29,10 +29,9 @@ GALLERY_TEMPLATE = jinja2.Template(u"""
 {{ title }}
 {% for char in title %}-{% endfor %}
 
-This gallery contains a selection of examples of the types of plots Altair
-can create. Though some may seem fairly complicated at first glance, they
-are built by combining a simple set of declarative building blocks:
-see the User Guide for more information on this.
+This gallery contains a selection of examples of the plots Altair can create.
+
+Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
 
 {% for group in examples|groupby('category') %}
 
