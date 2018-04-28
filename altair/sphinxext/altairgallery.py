@@ -228,6 +228,7 @@ def main(app):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
+    examples = sorted(examples, key=lambda x: x['title'])
     examples_toc = collections.OrderedDict({
         'Simple Charts': [],
         'Bar Charts': [],
