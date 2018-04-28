@@ -2,6 +2,7 @@ import hashlib
 import os
 import json
 import random
+import collections
 from operator import itemgetter
 
 import jinja2
@@ -33,17 +34,17 @@ This gallery contains a selection of examples of the plots Altair can create.
 
 Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
 
-{% for group in examples|groupby('category') %}
+{% for grouper, group in examples %}
 
-.. _gallery-category-{{ group.grouper }}:
+.. _gallery-category-{{ grouper }}:
 
-{{ group.grouper }}
-{% for char in group.grouper %}~{% endfor %}
+{{ grouper }}
+{% for char in grouper %}~{% endfor %}
 
 .. raw:: html
 
    <span class="gallery">
-   {% for example in group.list %}
+   {% for example in group %}
    <a class="imagegroup" href="{{ example.name }}.html">
      <span class="image" alt="{{ example.title }}" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png);"></span>
      <span class="image-title">{{ example.title }}</span>
@@ -55,7 +56,7 @@ Some may seem fairly complicated at first glance, but they are built by combinin
 
 .. toctree::
   :hidden:
-{% for example in group.list %}
+{% for example in group %}
   {{ example.name }}
 {%- endfor %}
 
@@ -199,7 +200,7 @@ class AltairMiniGalleryDirective(Directive):
 
         include = MINIGALLERY_TEMPLATE.render(image_dir='/_static',
                                               gallery_dir=gallery_dir,
-                                              examples=examples,
+                                              examples=grouped_examples,
                                               titles=titles,
                                               width=width)
 
@@ -227,15 +228,26 @@ def main(app):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
+    examples_toc = collections.OrderedDict({
+        'Simple Charts': [],
+        'Bar Charts': [],
+        'Line Charts': [],
+        'Area Charts': [],
+        'Scatter Plots': [],
+        'Histograms': [],
+        'Maps': [],
+        'Interactive Charts': [],
+        'Other Charts': []
+    })
+    for d in examples:
+        examples_toc[d['category']].append(d)
+
     # Write the gallery index file
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
         f.write(GALLERY_TEMPLATE.render(title=gallery_title,
-                                        examples=examples,
+                                        examples=examples_toc.items(),
                                         image_dir='/_static',
                                         gallery_ref=gallery_ref))
-
-    # save the images to file
-    save_example_pngs(examples, image_dir)
 
     # Write the individual example files
     for prev_ex, example, next_ex in prev_this_next(examples):

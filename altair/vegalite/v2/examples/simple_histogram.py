@@ -1,6 +1,6 @@
 """
-Histogram
------------------
+Simple Histogram
+----------------
 This example shows how to make a basic histogram, based on the vega-lite docs
 https://vega.github.io/vega-lite/examples/histogram.html
 """
