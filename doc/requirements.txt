@@ -3,4 +3,3 @@ jinja2
 numpydoc
 pillow
 sphinx_rtd_theme
-m2r
