@@ -200,7 +200,7 @@ class AltairMiniGalleryDirective(Directive):
 
         include = MINIGALLERY_TEMPLATE.render(image_dir='/_static',
                                               gallery_dir=gallery_dir,
-                                              examples=grouped_examples,
+                                              examples=examples,
                                               titles=titles,
                                               width=width)
 
@@ -248,6 +248,9 @@ def main(app):
                                         examples=examples_toc.items(),
                                         image_dir='/_static',
                                         gallery_ref=gallery_ref))
+
+    # save the images to file
+    save_example_pngs(examples, image_dir)
 
     # Write the individual example files
     for prev_ex, example, next_ex in prev_this_next(examples):
